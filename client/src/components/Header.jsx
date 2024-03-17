@@ -33,6 +33,7 @@ export default function Header() {
                     Sign In
                 </Button>
             </Link>
+            </div>
             <Navbar.Collapse>
                 <Navbar.Link active={path==="/"}>
                     <Link to='/'>
@@ -50,7 +51,7 @@ export default function Header() {
                     </Link>
                 </Navbar.Link>
             </Navbar.Collapse>
-        </div>
+        
     </Navbar>
   )
 }
