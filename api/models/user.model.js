@@ -19,7 +19,12 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false
-  }
+  },
+  profilePicture:{
+    type:DataTypes.STRING,
+    default:"https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png",
+    allowNull:true
+  },
 });
 
 export default User;
