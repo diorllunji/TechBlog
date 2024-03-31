@@ -22,9 +22,11 @@ const User = sequelize.define('User', {
   },
   profilePicture:{
     type:DataTypes.STRING,
-    default:"https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png",
+    defaultValue:"https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png",
     allowNull:true
   },
 });
+
+
 
 export default User;
