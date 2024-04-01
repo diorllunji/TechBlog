@@ -68,3 +68,26 @@ export const update = async (req, res, next) => {
         next(error);
     }
 };
+
+export const deleteUser = async (req, res, next) => {
+    const { userId } = req.params;
+    const loggedInUserId = req.user.id.toString();
+
+    try {
+        const user = await User.findByPk(userId);
+
+        if (!user) {
+            return next(errorHandler(404, 'User not found'));
+        }
+
+        if (user.id.toString() !== loggedInUserId) {
+            return next(errorHandler(403, 'You are not allowed to update this user'));
+        }
+
+        await User.destroy({ where: { id: userId } });
+
+        res.status(200).json('User has been deleted');
+    } catch (error) {
+        next(error);
+    }
+};
