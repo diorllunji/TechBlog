@@ -36,7 +36,7 @@ export const signin=async(req,res,next)=>{
     }
 
     try{
-        const validUser=await User.findOne({where:{email}});
+        const validUser=await User.findOne({where:{email:email}});
 
         if(!validUser){
             next(errorHandler(404,'User not found!'));
@@ -69,7 +69,7 @@ export const google=async(req,res,next)=>{
     const {email,name,googlePhotoUrl}=req.body;
 
     try{
-        const user=await User.findOne({where:{email}})
+        const user=await User.findOne({where:{email:email}})
         if(user){
             const token=jwt.sign({id:user.id},process.env.JWT_SECRET);
             const {password:pass, ...rest}=user.toJSON();
