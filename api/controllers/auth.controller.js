@@ -49,7 +49,7 @@ export const signin=async(req,res,next)=>{
         }
 
         const token=jwt.sign(
-            {id:validUser.id}, process.env.JWT_SECRET
+            {id:validUser.id, isAdmin:validUser.isAdmin}, process.env.JWT_SECRET
         )
 
         const {password:pass, ...rest}=validUser.toJSON();
@@ -71,7 +71,7 @@ export const google=async(req,res,next)=>{
     try{
         const user=await User.findOne({where:{email:email}})
         if(user){
-            const token=jwt.sign({id:user.id},process.env.JWT_SECRET);
+            const token=jwt.sign({id:user.id, isAdmin:user.isAdmin},process.env.JWT_SECRET);
             const {password:pass, ...rest}=user.toJSON();
 
             delete rest.password;
@@ -91,7 +91,7 @@ export const google=async(req,res,next)=>{
                 profilePicture:googlePhotoUrl
             });
             
-            const token=jwt.sign({id:newUser.id},process.env.JWT_SECRET);
+            const token=jwt.sign({id:newUser.id, isAdmin:newUser.isAdmin},process.env.JWT_SECRET);
             const {password:pass, ...rest}=newUser.toJSON();
 
             delete rest.password;

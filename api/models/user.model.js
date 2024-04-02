@@ -3,7 +3,10 @@ import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize('TechBlog', 'username', 'password', {
     host: 'localhost',
-    dialect: 'mysql'
+    dialect: 'mysql',
+    dialectOptions:{
+      boolean:'boolean'
+    }
   });
 
 const User = sequelize.define('User', {
@@ -25,8 +28,13 @@ const User = sequelize.define('User', {
     defaultValue:"https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png",
     allowNull:true
   },
+  isAdmin:{
+    type:DataTypes.BOOLEAN,
+    defaultValue:false,
+    allowNull:false
+  }
 });
 
-
+await sequelize.sync({ alter: true });
 
 export default User;
