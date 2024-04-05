@@ -4,9 +4,6 @@ import Sequelize from 'sequelize';
 const sequelize = new Sequelize('TechBlog', 'username', 'password', {
     host: 'localhost',
     dialect: 'mysql',
-    dialectOptions:{
-      boolean:'boolean'
-    }
   });
 
 const User = sequelize.define('User', {
@@ -35,6 +32,5 @@ const User = sequelize.define('User', {
   }
 });
 
-await sequelize.sync({ alter: true });
 
 export default User;
