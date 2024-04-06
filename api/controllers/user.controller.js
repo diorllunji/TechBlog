@@ -100,3 +100,44 @@ export const signout=async(req,res,next)=>{
         next(error);
     }
 }
+
+export const getUsers = async (req, res, next) => {
+    if (!req.user.isAdmin) {
+        return next(errorHandler(403, 'You are not allowed to see all users'));
+    }
+    try {
+        const startIndex = parseInt(req.query.startIndex) || 0;
+        const limit = parseInt(req.query.limit) || 9;
+        const order = req.query.sort === 'asc' ? 'ASC' : 'DESC'; // Adjusting for Sequelize order syntax
+
+        const users = await User.findAll({
+            order: [['createdAt', order]],
+            offset: startIndex,
+            limit: limit
+        });
+
+        const usersWithoutPassword = users.map(user => {
+            const { password, ...rest } = user.toJSON(); // Sequelize models use toJSON to get the plain object
+            return rest;
+        });
+
+        const totalUsers = await User.count();
+
+        const now = new Date();
+        const oneMonthAgo = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+
+        const lastMonthUsers = await User.count({
+            where: {
+                createdAt: { [Sequelize.Op.gte]: oneMonthAgo }
+            }
+        });
+
+        res.status(200).json({
+            users: usersWithoutPassword,
+            totalUsers,
+            lastMonthUsers
+        });
+    } catch (error) {
+        next(error);
+    }
+}
