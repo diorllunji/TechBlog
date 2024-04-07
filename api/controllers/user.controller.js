@@ -1,6 +1,7 @@
 import { errorHandler } from "../utils/error.js";
 import bcryptjs from 'bcryptjs'
 import User from "../models/user.model.js";
+import { Sequelize } from "sequelize";
 
 export const test=(req,res)=>{
     res.json({message:'API is working'});
