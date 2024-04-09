@@ -8,9 +8,9 @@ export default function DashPosts() {
     const {currentUser}=useSelector(state=>state.user);
     const [userPosts,setUserPosts]=useState([]);
     const [showMore,setShowMore]=useState(true);
-    const [categories,setCategories]=useState(null);
     const [showModal,setShowModal]=useState(false);
     const [postIdToDelete,setPostIdToDelete]=useState('');
+    const [categories,setCategories]=useState([]);
 
     useEffect(()=>{
         const fetchPosts=async()=>{
@@ -122,9 +122,7 @@ export default function DashPosts() {
                                 <Link className='font-medium text-gray-900 dark:text-white' to={`/post/${post.slug}`}>{post.title}</Link>
                             </Table.Cell>
                             <Table.Cell> 
-                            {categories && post.category && 
-                            categories.find(category => category._id.toString() === post.category.toString())?.name
-                            }
+                            {post.category && post.category.name}
                             </Table.Cell>
                             <Table.Cell>
                                 <span onClick={()=>{

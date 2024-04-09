@@ -8,6 +8,7 @@ export default function PostPage() {
     const [loading,setLoading]=useState();
     const [error,setError]=useState(false);
     const [post,setPost]=useState(null);
+    const category = post && post.category;
 
     useEffect(() => {
         const fetchPost = async () => {
@@ -15,24 +16,15 @@ export default function PostPage() {
                 setLoading(true);
                 const postRes = await fetch(`/api/post/getposts?slug=${postSlug}`);
                 const postData = await postRes.json();
-
-                if (!postRes.ok) {
+    
+                if (!postRes.ok || postData.posts.length === 0) {
                     setError(true);
                     setLoading(false);
                     return;
                 }
-
-                if (postData.posts.length > 0) {
-                    const fetchedPost = postData.posts[0];
-                    setPost(fetchedPost);
-                    const categoryRes = await fetch(`/api/category/getcategory/${fetchedPost.categoryId}`);
-                    const categoryData = await categoryRes.json();
-
-                    if (categoryRes.ok && categoryData.category) {
-                        setCategory(categoryData.category);
-                    }
-                }
-
+    
+                const fetchedPost = postData.posts[0];
+                setPost(fetchedPost);
                 setLoading(false);
                 setError(false);
             } catch (error) {
@@ -40,7 +32,7 @@ export default function PostPage() {
                 setLoading(false);
             }
         };
-
+    
         fetchPost();
     }, [postSlug]);
 

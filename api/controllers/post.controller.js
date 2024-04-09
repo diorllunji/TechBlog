@@ -12,7 +12,7 @@ export const createPost = async (req, res, next) => {
         }
 
         // Check if the specified category exists
-        const existingCategory = await Category.findOne({ name: req.body.category });
+        const existingCategory = await Category.findById(req.body.category);
         if (!existingCategory) {
             return next(errorHandler(404, 'Category not found'));
         }
@@ -66,6 +66,7 @@ export const getPosts = async (req, res, next) => {
         }
 
         const posts = await Post.find(query)
+            .populate('category')
             .sort({ updatedAt: sortDirection })
             .skip(startIndex)
             .limit(limit);
@@ -128,3 +129,4 @@ export const updatePost=async(req,res,next)=>{
      }
         
     }
+

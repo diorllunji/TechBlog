@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import Sequelize from 'sequelize';
 
-const sequelize = new Sequelize('TechBlog', 'username', 'password', {
+const sequelize = new Sequelize('techblog', 'username', 'password', {
     host: 'localhost',
     dialect: 'mysql',
   });
@@ -31,6 +31,7 @@ const User = sequelize.define('User', {
     allowNull:false
   }
 });
+
 
 
 export default User;
