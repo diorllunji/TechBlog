@@ -1,6 +1,6 @@
 import React from 'react'
 import {Sidebar} from 'flowbite-react'
-import { HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiUser } from 'react-icons/hi';
+import { HiArrowSmRight, HiDocumentReport, HiDocumentText, HiOutlineUserGroup, HiUser } from 'react-icons/hi';
 import { useEffect,useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -25,7 +25,7 @@ export default function DashSidebar() {
     const handleSignout=async()=>{
       try{
         const res=await fetch('/api/user/signout',{
-          method:'POST',
+          method:'POST'
         });
         const data=await res.json();
   
@@ -61,6 +61,13 @@ export default function DashSidebar() {
                   <Link to='/dashboard?tab=users'>
                   <Sidebar.Item active={tab==='users'} icon={HiOutlineUserGroup} as='div'>
                     Users
+                  </Sidebar.Item>
+                </Link>
+                )}
+                {currentUser.isAdmin && (
+                  <Link to='/dashboard?tab=categories'>
+                  <Sidebar.Item active={tab==='categories'} icon={HiDocumentReport} as='div'>
+                    Categories
                   </Sidebar.Item>
                 </Link>
                 )}

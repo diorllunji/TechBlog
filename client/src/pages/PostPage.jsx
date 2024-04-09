@@ -9,32 +9,41 @@ export default function PostPage() {
     const [error,setError]=useState(false);
     const [post,setPost]=useState(null);
 
-    useEffect(()=>{
-        const fetchPost=async()=>{
-            try{
+    useEffect(() => {
+        const fetchPost = async () => {
+            try {
                 setLoading(true);
-                const res=await fetch(`/api/post/getposts?slug=${postSlug}`);
-                const data=await res.json();
+                const postRes = await fetch(`/api/post/getposts?slug=${postSlug}`);
+                const postData = await postRes.json();
 
-                if(!res.ok){
+                if (!postRes.ok) {
                     setError(true);
                     setLoading(false);
                     return;
                 }
 
-                if(res.ok){
-                    setPost(data.posts[0]);
-                    setLoading(false);
-                    setError(false);
+                if (postData.posts.length > 0) {
+                    const fetchedPost = postData.posts[0];
+                    setPost(fetchedPost);
+                    const categoryRes = await fetch(`/api/category/getcategory/${fetchedPost.categoryId}`);
+                    const categoryData = await categoryRes.json();
+
+                    if (categoryRes.ok && categoryData.category) {
+                        setCategory(categoryData.category);
+                    }
                 }
-            }catch(error){
+
+                setLoading(false);
+                setError(false);
+            } catch (error) {
                 setError(true);
                 setLoading(false);
             }
-        }
-        
+        };
+
         fetchPost();
-    },[postSlug]);
+    }, [postSlug]);
+
 
     if(loading) return (
     <div className='flex justify-center items-center min-h-screen'>
@@ -45,8 +54,8 @@ export default function PostPage() {
   return (
     <main className='p-3 flex flex-col max-w-6xl mx-auto min-h-screen'>
         <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>{post && post.title}</h1>
-        <Link to={`/search?category=${post && post.category}`} className='self-center mt-5'>
-        <Button color='gray' pill size='xs'>{post && post.category}</Button>
+        <Link to={`/search?category=${category && category._id}`} className='self-center mt-5'>
+        <Button color='gray' pill size='xs'>{category && category.name}</Button>
         </Link>
         <img src={post && post.image} alt={post && post.title} className='mt-10 p-3 max-h-[600px] w-full object-cover'/>
         <div className='flex justify-between p-3 border-b border-slate-500 mx-auto w-full max-w-2xl text-xs'>

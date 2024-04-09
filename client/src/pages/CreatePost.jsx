@@ -1,5 +1,5 @@
 import { Alert, Button, FileInput, Select, TextInput } from 'flowbite-react';
-import { useState, React } from 'react'
+import { useState, React, useEffect } from 'react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { app } from '../firebase';
@@ -7,13 +7,16 @@ import {getDownloadURL, getStorage, uploadBytesResumable, ref} from 'firebase/st
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 export default function CreatePost() {
+    const {currentUser}=useSelector(state=>state.user);
     const [file,setFile]=useState(null);
     const [imageUploadProgress,setImageUploadProgress]=useState(null);
     const [imageUploadError,setImageUploadError]=useState(null);
     const [formData,setFormData]=useState({});
     const [publishError,setPublishError]=useState(null);
+    const [categories,setCategories]=useState(null);
     const navigate=useNavigate();
 
     const handleUploadImage = async () => {
@@ -90,6 +93,24 @@ export default function CreatePost() {
         setFormData({...formData, content:value});
     };
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const res = await fetch(`/api/category/getcategory?userId=${currentUser.id}`);
+                const data = await res.json();
+                if (res.ok) {
+                    setCategories(data);
+                } else {
+                    console.error('Failed to fetch categories:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching categories:', error.message);
+            }
+        };
+
+        fetchCategories();
+    }, [currentUser.isAdmin]);
+
   return (
     <div className='p-3 max-w-3xl mx-auto min-h-screen'>
         <h1 className='text-center text-3xl my-7 font-semibold'>Create a post</h1>
@@ -99,8 +120,10 @@ export default function CreatePost() {
                 onChange={(e)=>setFormData({...formData,title:e.target.value})}
                 />
                 <Select onChange={(e)=>setFormData({...formData,category:e.target.value})}>
-                    <option value='uncategorized'>Select a category</option>
-                    <option value="javascript">Javascript</option>
+                <option value=''>Select a category</option>
+                {categories && categories.map(category => (
+                 <option key={category._id} value={category._id}>{category.name}</option>
+                 ))}
                 </Select>
             </div>
             <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>

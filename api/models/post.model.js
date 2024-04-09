@@ -19,8 +19,8 @@ const postSchema=new mongoose.Schema({
         default:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSguB9wiXHIxPQ-fJDPLgRP5D9vNcokOa2mFbdL9-4nww&s'
     },
     category:{
-        type:String,
-        default:'Uncategorized',
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Category',
     },
     slug:{
         type:String,

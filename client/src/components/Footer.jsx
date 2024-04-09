@@ -82,5 +82,5 @@ export default function FooterComp() {
             </div>
         </div>
     </Footer>
-  )
+  );
 }

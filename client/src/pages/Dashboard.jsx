@@ -4,6 +4,7 @@ import DashSidebar from '../components/DashSidebar';
 import DashProfile from '../components/DashProfile';
 import DashPosts from '../components/DashPosts';
 import DashUsers from '../components/DashUsers';
+import DashCategories from '../components/DashCategories';
 
 export default function Dashboard() {
   const location=useLocation();
@@ -14,7 +15,7 @@ export default function Dashboard() {
     if(tabFromUrl){
       setTab(tabFromUrl);
     }
-  },[location.search])
+  },[location.search]);
   return (
     <div className='min-h-screen flex flex-col md:flex-row'>
       <div className='md:w-56'>
@@ -27,8 +28,10 @@ export default function Dashboard() {
     {tab==='posts' && <DashPosts/>}
     {/*users */}
     {tab==='users' && <DashUsers/>}
+    {/*categories*/}
+    {tab==='categories' && <DashCategories/>}
     </div>
     
     
   );
-}
+};

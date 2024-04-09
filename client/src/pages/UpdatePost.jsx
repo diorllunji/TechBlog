@@ -91,7 +91,7 @@ export default function UpdatePost() {
                 headers:{
                     'Content-Type':'application/json',
                 },
-                body:JSON.stringify(formData),
+                body:JSON.stringify(formData)
             });
             const data=await res.json();
             if(!res.ok){
@@ -164,5 +164,5 @@ export default function UpdatePost() {
             {publishError && <Alert className='mt-5' color='failure'>{publishError}</Alert>}
         </form>
     </div>
-  )
-}
+  );
+};

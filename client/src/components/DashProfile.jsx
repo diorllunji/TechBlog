@@ -98,7 +98,7 @@ export default function DashProfile() {
         headers:{
           'Content-Type':'application/json'
         },
-        body:JSON.stringify(formData),
+        body:JSON.stringify(formData)
       });
       const data=await res.json();
       if(!res.ok){
@@ -120,7 +120,7 @@ export default function DashProfile() {
     try{
       dispatch(deleteUserStart());
       const res=await fetch(`/api/user/delete/${currentUser.id}`,{
-        method:'DELETE',
+        method:'DELETE'
       });
       const data=await res.json();
 
@@ -139,7 +139,7 @@ export default function DashProfile() {
   const handleSignout=async()=>{
     try{
       const res=await fetch('/api/user/signout',{
-        method:'POST',
+        method:'POST'
       });
       const data=await res.json();
 
