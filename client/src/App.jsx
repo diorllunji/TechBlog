@@ -14,6 +14,7 @@ import CreatePost from './pages/CreatePost'
 import UpdatePost from './pages/UpdatePost'
 import PostPage from './pages/PostPage'
 import UpdateCategory from './pages/UpdateCategory'
+import CreateCategory from './pages/CreateCategory'
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
       </Route>
       <Route element={<OnlyAdminPrivateRoute/>}>
       <Route path='/create-post' element={<CreatePost/>}/>
+      <Route path='/create-category' element={<CreateCategory/>}/>
       <Route path='/update-post/:postId' element={<UpdatePost/>}/>
       <Route path='/update-category/:categoryId' element={<UpdateCategory/>}/>
       </Route>

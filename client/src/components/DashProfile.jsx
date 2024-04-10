@@ -194,14 +194,24 @@ export default function DashProfile() {
         <TextInput type='text' id='username' placeholder='Username' defaultValue={currentUser.username} onChange={handleChange}/>
         <TextInput type='email' id='email' placeholder='E-Mail' defaultValue={currentUser.email} onChange={handleChange}/>
         <TextInput type='password' id='password' placeholder='Password'  onChange={handleChange}/>
-        <Button type='submit' gradientDuoTone='blueToPurple' outline disabled={loading||imageFileUploading}>
+        <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled={loading||imageFileUploading}>
           {loading? 'Loading':'Update'}
         </Button>
         {
           currentUser.isAdmin && (
             <Link to={'/create-post'}>
-            <Button type='button' gradientDuoTone='purpleToBlue' className='w-full'>
+            <Button type='button' gradientDuoTone='purpleToBlue' outline className='w-full'>
               Create a post
+            </Button>
+            </Link>
+            
+          )
+        }
+        {
+          currentUser.isAdmin && (
+            <Link to={'/create-category'}>
+            <Button type='button' gradientDuoTone='purpleToBlue' outline className='w-full'>
+              Create a category
             </Button>
             </Link>
             
