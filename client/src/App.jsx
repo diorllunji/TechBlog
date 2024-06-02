@@ -15,10 +15,12 @@ import UpdatePost from './pages/UpdatePost'
 import PostPage from './pages/PostPage'
 import UpdateCategory from './pages/UpdateCategory'
 import CreateCategory from './pages/CreateCategory'
+import ScrollToTop from './components/ScrollToTop'
 
 export default function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop/>
     <Header/>
     <Routes>
       <Route path='/' element={<Home/>}/>

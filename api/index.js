@@ -5,6 +5,7 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import postRoutes from './routes/post.route.js';
 import categoryRoutes from './routes/category.route.js';
+import commentRoutes from './routes/comment.route.js';
 import sequelize from './utils/sequelize.js';
 import './utils/sync-db.js';
 import cookieParser from 'cookie-parser';
@@ -41,6 +42,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/post',postRoutes);
 app.use('/api/category',categoryRoutes);
+app.use('/api/comment',commentRoutes)
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
